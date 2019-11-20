@@ -1,20 +1,54 @@
 package com.javadevelopersguide.mavenwebapp.web;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 
-import javax.servlet.ServletException;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class SimpleServlet extends HttpServlet {
+public class Game extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        any(req, resp);
+    }
+    @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        any(req, resp);
+    }
+    private void any(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException{
+        String categoria = req.getParameter("categoria");
+        String dificuldade = req.getParameter("dificuldade");
+        req.getSession().setAttribute("categoria",categoria);
+        String [] dificuldades = {"CASUAL","REGULAR","BRUTAL"};
+        String [] categorias = {"HUMANA","EMPREENDORISMO","SOCIAL"};
+        net.javaguides.mavenwebapp.Game now = new net.javaguides.mavenwebapp.Game();
+
+        try {
+            now.setDificuldade(dificuldades[Integer.valueOf(dificuldade)]);
+        }catch (Exception e){
+            Random r = new Random();
+            now.setDificuldade(dificuldades[r.nextInt(dificuldades.length)]);
+        }
+        try{
+            now.setCategoria(categorias[Integer.valueOf(categoria)]);
+        }catch (Exception e){
+            Random r = new Random();
+            now.setDificuldade(categorias[r.nextInt(categorias.length)]);
+        }
+        req.getSession().setAttribute("now",now);
+        req.getRequestDispatcher("game.jsp").forward(req, resp);
+
+    }
+
+
+
+        public void doSome(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
         String [] palavra = {"ACOMPANHAMENTO","PROXIMIDADE","AUTONOMIA","DINAMISMO","CRIATIVIDADE","FLEXIBILIDADE","ESTABILIDADE","ENVOLVIMENTO"};
 
         String [] categoria = {"HUMANA","EMPREENDORISMO","SOCIAL"};
@@ -50,80 +84,5 @@ public class SimpleServlet extends HttpServlet {
         out.flush();
         out.close();
     }
-    private String noPersonDraw() {
-        return " - - - - -\n"+
-                "|        |\n"+
-                "|        \n" +
-                "|       \n"+
-                "|        \n" +
-                "|       \n" +
-                "|\n" +
-                "|\n";
-    }
 
-    private String addHeadDraw() {
-        return " - - - - -\n"+
-                "|        |\n"+
-                "|        O\n" +
-                "|       \n"+
-                "|        \n" +
-                "|       \n" +
-                "|\n" +
-                "|\n";
-    }
-
-    private String addBodyDraw() {
-        return " - - - - -\n"+
-                "|        |\n"+
-                "|        O\n" +
-                "|        | \n"+
-                "|        |\n" +
-                "|        \n" +
-                "|\n" +
-                "|\n";
-    }
-
-    private String addOneArmDraw() {
-        return   " - - - - -\n"+
-                "|        |\n"+
-                "|        O\n" +
-                "|      / |  \n"+
-                "|        |\n" +
-                "|        \n" +
-                "|\n" +
-                "|\n";
-    }
-
-    private String addSecondArmDraw() {
-        return  " - - - - -\n"+
-                "|        |\n"+
-                "|        O\n" +
-                "|      / | \\ \n"+
-                "|        |\n" +
-                "|        \n" +
-                "|\n" +
-                "|\n";
-    }
-
-    private String addFirstLegDraw() {
-        return   " - - - - -\n"+
-                "|        |\n"+
-                "|        O\n" +
-                "|      / | \\ \n"+
-                "|        |\n" +
-                "|       / \n" +
-                "|\n" +
-                "|\n";
-    }
-
-    private String fullPersonDraw() {
-        return   " - - - - -\n"+
-                "|        |\n"+
-                "|        O\n" +
-                "|      / | \\ \n"+
-                "|        |\n" +
-                "|       / \\ \n" +
-                "|\n" +
-                "|\n";
-    }
 }

@@ -9,14 +9,24 @@
 
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
-        <servlet-name>simple</servlet-name>
+        <servlet-name>categoria</servlet-name>
         <servlet-class>
-            com.javadevelopersguide.mavenwebapp.web.SimpleServlet
+            com.javadevelopersguide.mavenwebapp.web.Categoria
         </servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>simple</servlet-name>
-        <url-pattern>/simple</url-pattern>
+        <servlet-name>categoria</servlet-name>
+        <url-pattern>/categoria</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>game</servlet-name>
+        <servlet-class>
+            com.javadevelopersguide.mavenwebapp.web.Game
+        </servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>game</servlet-name>
+        <url-pattern>/game</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>complex</servlet-name>
